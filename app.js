@@ -27,12 +27,12 @@ db.run(`CREATE TABLE IF NOT EXISTS estudiantes (
 app.get('/students', (req, res) => {
   db.all("SELECT * FROM estudiantes", [], (err, rows) => {
     if (err) {
-      res.status(400).json({"error":err.message});
+      res.status(400).json({"error": err.message});
       return;
     }
     res.json({
-      "message":"success",
-      "data":rows
+      "message": "success",
+      "data": rows
     });
   });
 });
@@ -40,12 +40,12 @@ app.get('/students', (req, res) => {
 app.get('/students/:id', (req, res) => {
   db.get("SELECT * FROM estudiantes WHERE _id = ?", [req.params.id], (err, row) => {
     if (err) {
-      res.status(400).json({"error":err.message});
+      res.status(400).json({"error": err.message});
       return;
     }
     res.json({
-      "message":"success",
-      "data":row
+      "message": "success",
+      "data": row
     });
   });
 });
@@ -76,22 +76,20 @@ app.put('/students/:id', (req, res) => {
         return;
       }
       res.json({
-        message: "success",
-        data: {changes: this.changes}
+        "message": "success",
+        "data": {changes: this.changes}
       });
     });
 });
 
 app.delete('/students/:id', (req, res) => {
-  db.run(`DELETE FROM estudiantes WHERE _id = ?`,
-    req.params.id,
-    function(err) {
-      if (err) {
-        res.status(400).json({"error": err.message});
-        return;
-      }
-      res.json({"message":"deleted", changes: this.changes});
-    });
+  db.run('DELETE FROM estudiantes WHERE _id = ?', req.params.id, function(err) {
+    if (err) {
+      res.status(400).json({"error": err.message});
+      return;
+    }
+    res.json({"message": "deleted", changes: this.changes});
+  });
 });
 
 app.listen(port, '0.0.0.0', () => {
